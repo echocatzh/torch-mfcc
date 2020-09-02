@@ -9,6 +9,11 @@ Install easily with pip:`pip install torch_mfcc` or download this repo, `python 
 
 ## Usage
 
+If you want the same timesteps as kaldi, make sure that:
+- the window length, window hop length and fft length are same.
+- set enframed_mode(str)='break', which defaults to 'continue'. 
+- set center(bool)=False. which defaults to True.
+
 ```python3
 import torch as th
 import torch.nn.functional as tf

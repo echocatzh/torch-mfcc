@@ -8,7 +8,8 @@ from librosa.filters import mel as filters_mel
 class FBANK(th.nn.Module):
     def __init__(self, win_len, win_hop, fft_len, sr,
                  win_type='hann', power=2.0, n_mel=128,
-                 ref=1.0, amin=1e-17, top_db=80.0, center=True):
+                 ref=1.0, amin=1e-17, top_db=80.0,
+                 center=True, enframe_mode='continue'):
         """
         Implement of Fbank using 1D convolution and 1D transpose convolutions.
 
@@ -24,7 +25,10 @@ class FBANK(th.nn.Module):
             ref (float, optional): See `librosa.core.power_to_db` for details.
             amin (float, optional): As above. Defaults to 1e-17.
             top_db (float, optional): As above. Defaults to 80.0.
-            center (bool, optional): If padding the input signal. Defaults to True.
+            center (bool, optional): If padding the input signal.
+            Defaults to True.
+            enframe_mode (str, optional): default enframe method in librosa.
+            Defaults to True.
         """
         super(FBANK, self).__init__()
         self.stft = STFT(
@@ -33,7 +37,7 @@ class FBANK(th.nn.Module):
             fft_len=fft_len,
             pad_center=center,
             win_type=win_type,
-            enframe_mode='break')
+            enframe_mode=enframe_mode)
         self.sr = sr
         self.fft_len = fft_len
         self.power = power
@@ -81,7 +85,8 @@ class FBANK(th.nn.Module):
         Take input data (audio) to fbank feature.
 
         Args:
-            inputs (tensor): Tensor of floats, with shape [num_batch, num_samples]
+            inputs (tensor): Tensor of floats, with shape
+            [num_batch, num_samples]
 
         Returns:
             tensor: fbank feature of shape [num_batch, num_mels]

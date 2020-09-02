@@ -8,7 +8,8 @@ class MFCC(th.nn.Module):
     def __init__(self, win_len, win_hop, fft_len, sr,
                  win_type='hann', power=2.0, n_mel=128, n_mfcc=13,
                  dct_type=2, norm='ortho', ref=1.0,
-                 amin=1e-10, top_db=80.0, center=True):
+                 amin=1e-10, top_db=80.0,
+                 center=True, enframe_mode='continue'):
         """
         Implement of MFCC using 1D convolution and 1D transpose convolutions.
 
@@ -29,12 +30,13 @@ class MFCC(th.nn.Module):
             top_db (float, optional): As above. Defaults to 80.0.
             center (bool, optional): If padding the input signal.
             Defaults to True.
+            enframe_mode (str, optional): default enframe method in librosa.
         """
         super(MFCC, self).__init__()
         self.fbank = FBANK(
             win_len, win_hop, fft_len, sr,
-            win_type, power, n_mel, ref, amin,
-            top_db, center=center)
+            win_type, power, n_mel, ref, amin, top_db,
+            center=center, enframe_mode=enframe_mode)
         self.n_mel = n_mel
         self.n_mfcc = n_mfcc
         self.dct_type = dct_type
