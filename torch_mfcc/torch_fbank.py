@@ -32,7 +32,8 @@ class FBANK(th.nn.Module):
             win_hop=win_hop,
             fft_len=fft_len,
             pad_center=center,
-            win_type=win_type)
+            win_type=win_type,
+            enframe_mode='break')
         self.sr = sr
         self.fft_len = fft_len
         self.power = power
@@ -86,7 +87,7 @@ class FBANK(th.nn.Module):
             tensor: fbank feature of shape [num_batch, num_mels]
         """
         real, imag = self.stft.transform(inputs, return_type='realimag')
-        amp_feature = th.sqrt(th.square(real) + th.square(imag))
+        amp_feature = th.sqrt((real)**2 + (imag)**2)
         amp_feature_power = th.pow(amp_feature, self.power)
         mel_spec = tf.linear(amp_feature_power.transpose(1, 2), self.mel_k)
         mel_spec = self.power2db(mel_spec)

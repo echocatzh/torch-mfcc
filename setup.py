@@ -21,5 +21,5 @@ setup(name=NAME,
       author_email="shmzhang@npu-aslp.org",
       packages=["torch_mfcc"],
       install_requires=REQUIREMENTS,
-      python_requires=">=3.5",
+    #   python_requires=">=3.5",
       license="MIT")
