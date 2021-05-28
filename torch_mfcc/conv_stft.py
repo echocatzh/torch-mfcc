@@ -2,6 +2,10 @@ import torch
 import torch.nn.functional as tf
 from scipy.signal import check_COLA, get_window
 
+if th.__version__ >= '1.7.0':
+    from torch.fft import rfft as fft
+else:
+    from torch import rfft as fft
 
 class STFT(torch.nn.Module):
     def __init__(self, win_len=1024, win_hop=512, fft_len=1024,
@@ -59,7 +63,7 @@ class STFT(torch.nn.Module):
             tuple: four kernels.
         """
         enframed_kernel = torch.eye(self.fft_len)[:, None, :]
-        fft_kernel = torch.rfft(torch.eye(self.fft_len), 1)
+        fft_kernel = fft(torch.eye(self.fft_len), 1)
         if self.mode == 'break':
             enframed_kernel = torch.eye(self.win_len)[:, None, :]
             fft_kernel = fft_kernel[:self.win_len]
