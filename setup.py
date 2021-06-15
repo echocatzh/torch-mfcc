@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 NAME = 'torch_mfcc'
-VERSION = "0.1.3"
+VERSION = "0.2.0"
 REQUIREMENTS = [
     'numpy',
     'scipy',

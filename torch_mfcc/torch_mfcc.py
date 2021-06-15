@@ -3,7 +3,6 @@ import numpy as np
 from .torch_fbank import FBANK
 import torch.nn.functional as tf
 
-
 class MFCC(th.nn.Module):
     def __init__(self, win_len, win_hop, fft_len, sr,
                  win_type='hann', power=2.0, n_mel=128, n_mfcc=13,

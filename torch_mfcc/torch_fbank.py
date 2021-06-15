@@ -4,7 +4,6 @@ import numpy as np
 from .conv_stft import STFT
 from librosa.filters import mel as filters_mel
 
-
 class FBANK(th.nn.Module):
     def __init__(self, win_len, win_hop, fft_len, sr,
                  win_type='hann', power=2.0, n_mel=128,
