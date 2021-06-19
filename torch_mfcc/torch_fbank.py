@@ -46,6 +46,7 @@ class FBANK(th.nn.Module):
         self.amin = amin
         self.top_db = top_db
         self.register_buffer('mel_k', mel_k)
+        self.register_buffer('inv_k', th.pinverse(mel_k))
 
     def power2db(self, spec):
         """
@@ -96,3 +97,9 @@ class FBANK(th.nn.Module):
         mel_spec = tf.linear(amp_feature_power.transpose(1, 2), self.mel_k)
         mel_spec = self.power2db(mel_spec)
         return mel_spec
+    
+    transform = forward
+    
+    def inverse(self, inputs):
+        mel2fft_spec = tf.linear(inputs, self.inv_k)
+        return mel2fft_spec
