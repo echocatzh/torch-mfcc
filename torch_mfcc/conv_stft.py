@@ -12,7 +12,7 @@ else:
 class STFT(th.nn.Module):
     def __init__(self, win_len=1024, win_hop=512, fft_len=1024,
                  enframe_mode='continue', win_type='hann',
-                 win_sqrt=False, pad_center=True):
+                 win_sqrt=False, pad_center=False):
         """
         Implement of STFT using 1D convolution and 1D transpose convolutions.
         Implement of framing the signal in 2 ways, `break` and `continue`.
@@ -109,7 +109,7 @@ class STFT(th.nn.Module):
         """
         return self.perfect_reconstruct and self.pad_center
 
-    def transform(self, inputs, return_type='complex'):
+    def transform(self, inputs, return_type='realimag'):
         """Take input data (audio) to STFT domain.
 
         Args:
@@ -147,7 +147,7 @@ class STFT(th.nn.Module):
             phase = th.atan2(imag, real)
             return mags, phase
 
-    def inverse(self, input1, input2=None, input_type='magphase'):
+    def inverse(self, input1, input2=None, input_type='realimag'):
         """Call the inverse STFT (iSTFT), given tensors produced 
         by the `transform` function.
 
@@ -195,6 +195,6 @@ class STFT(th.nn.Module):
             tensor: Reconstructed audio given magnitude and phase.
             Of shape [num_batch, num_samples]
         """
-        mag, phase = self.transform(inputs)
-        rec_wav = self.inverse(mag, phase)
+        real, imag = self.transform(inputs)
+        rec_wav = self.inverse(real, imag)
         return rec_wav
