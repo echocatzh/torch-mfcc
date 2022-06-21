@@ -5,7 +5,7 @@ A librosa STFT/Fbank/mfcc feature extration written up in PyTorch using 1D Convo
 
 ## Installation
 
-Install easily with pip:`pip install torch_mfcc` or download this repo, `python setup.py install`.
+**Download this repo, `python setup.py install`.**
 
 ## Usage
 
