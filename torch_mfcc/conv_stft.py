@@ -116,11 +116,11 @@ class STFT(th.nn.Module):
             inputs (tensor): Tensor of floats, with shape (num_batch, num_samples)
             return_type (str, optional): return (mag, phase) when `magphase`,
             return (real, imag) when `realimag` and complex(real, imag) when `complex`.
-            Defaults to 'complex'.
+            Defaults to 'realimag'.
 
         Returns:
             tuple: (mag, phase) when `magphase`, return (real, imag) when
-            `realimag`. Defaults to 'complex', each elements with shape 
+            `realimag`. Defaults to 'realimag', each elements with shape 
             [num_batch, num_frequencies, num_frames]
         """
         assert return_type in ['magphase', 'realimag', 'complex']
@@ -157,7 +157,7 @@ class STFT(th.nn.Module):
             input2 (tensors): Phase/Imag-part of STFT with shape
             [num_batch, num_frequencies, num_frames]
             input_type (str, optional): Mathematical meaning of input tensor's.
-            Defaults to 'magphase'.
+            Defaults to 'realimag'.
 
         Returns:
             tensors: Reconstructed audio given magnitude and phase. Of
